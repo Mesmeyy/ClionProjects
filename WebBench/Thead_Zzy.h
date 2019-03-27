@@ -13,8 +13,8 @@
 
 
 typedef  std::thread THread;//线程的别名
-typedef std::map<int,Thread_per> MAp_thread;
-typedef std::queue<Request_Pack> QUeue;
+typedef  std::vector<std::pair<int,Thread_per> >  VEcpair;
+typedef  std::queue<Request_Pack> QUeue;
 
 #define MAX_POOL_NUM 64 //最大线程数 64
 #define  INIT_POOL_NUM 4 //最小初始化线程数 4
@@ -25,13 +25,14 @@ typedef std::queue<Request_Pack> QUeue;
 class Thread_per//单个线程类
 {
 public:
-    int Send_bao;//发包数量
-    unsigned  int Send_b;//发包bit
+    int Send_bao = 0;//发包数量
+    unsigned  int Send_b = 0;//发包bit
 
-    int Recv_bao;//收包数量
-    unsigned  int Recv_b;//收包bit数量
+    int Recv_bao = 0;//收包数量
+    unsigned  int Recv_b = 0;//收包bit数量
 
     THread thread;//单个线程
+
 
     //应该有一个接受缓冲区
 };
@@ -48,7 +49,7 @@ private:
 public:
     Thread_Pool  Pools;
 public:
-    bool Set_data_combine(int i);//把i线程的相关数据赋值到总的线程池
+    bool Set_data_combine();//把i线程的相关数据赋值到总的线程池
     int Get_data_combine();//获取数据总和
 
 };
@@ -56,7 +57,7 @@ public:
 class Thread_Pool
 {
 public:
-    MAp_thread Map_thread;
+    VEctor vec;
 
 private:
     int Thread_number = INIT_POOL_NUM;//线程个数
@@ -65,7 +66,7 @@ public:
     QUeue Queue_request_pack;//任务队列
 
     Thread_Pool() = default;//默认创建线程池
-    Thread_Pool(int thread_num = INIT_POOL_NUM);//指定数目创进程池
+    Thread_Pool(int thread_num = INIT_POOL_NUM);//指定数目创线程池
 
     bool Thead_pool_init(int thread_num);//线程池初始化数量大小
 

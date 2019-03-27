@@ -3,28 +3,23 @@
 //
 
 #include "Thead_Zzy.h"
-#include <mutex>
+#include <iterator>
+#include <algorithm>
+
 
 using namespace std;
 static std::mutex  Mutex;
 
-
-bool  Thread_Pack::Set_data_combine(int i)
+/*没有写好
+bool  Thread_Pack::Set_data_combine()
 {
-    //访问当前左右线程
-    map<int ,Thread_per>::iterator L_it;
-    L_it = Pools.Map_thread.find(i);
-    if(L_it == Pools.Map_thread.end()) {
-        cout << "The " << i << " Thread " << "is not found"<<endl;
-        return false;
+    //对每一个线程都执行总和相加
+    vector<pair<int,Thread_per> > ::iterator it;
+    for(it = Pools.vec.begin();it != Pools.vec.end();it ++){
+        (*it).
     }
-    Mutex.lock();
-    Con_num += L_it -> second.Send_bao;
-    Data_send_combine = L_it -> second.Send_b;
-    Data_recv_combine = L_it -> second.Recv_b;
-    //没有计算每一秒的数据
-    Mutex.unlock();
-}
+}*/
+
 
 int Thread_Pack::Get_data_combine()
 {
@@ -36,3 +31,29 @@ int Thread_Pack::Get_data_combine()
 }
 
 Thread_Pool::Thread_Pool(int thread_num = INIT_POOL_NUM)
+{
+    if(thread_num < INIT_POOL_NUM || thread_num > MAX_POOL_NUM) {
+        if(thread_num < INIT_POOL_NUM) Thead_pool_init(INIT_POOL_NUM);
+        if( thread_num > MAX_POOL_NUM) Thead_pool_init(MAX_POOL_NUM);
+
+    }
+    else Thead_pool_init(thread_num);
+}
+
+bool Thread_Pool::Thead_pool_init(int thread_num)
+{
+    //创建线程线程实体 = <int i,线程包> ，线程实体构成线程集合
+    for(int i = 0;i < thread_num,i++){
+        Thread_per tp;
+        std::pair<int,Thread_per> temp(i,tp);
+        vec.push_back(temp);
+    }
+    Thread_number = thread_num;
+}
+
+bool Thread_Pool::Thead_add(int add_num)
+{
+    for(int i = 1;i <= add_num;i++){
+        int index =
+    }
+}
