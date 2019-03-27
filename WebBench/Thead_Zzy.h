@@ -24,13 +24,16 @@ typedef std::queue<Request_Pack> QUeue;
 
 class Thread_per//单个线程类
 {
-    int send_http;//发包数量
-    int send_bit;//发包bit
+public:
+    int Send_bao;//发包数量
+    unsigned  int Send_b;//发包bit
 
-    int recv_http;//收包数量
-    int recv_bit;//收包bit数量
+    int Recv_bao;//收包数量
+    unsigned  int Recv_b;//收包bit数量
 
     THread thread;//单个线程
+
+    //应该有一个接受缓冲区
 };
 
 class Thread_Pack
@@ -38,7 +41,7 @@ class Thread_Pack
 private:
     int Con_num;//连接数量的大小
     int Data_recv_combine;//总共接受数据之和
-    int Data_send_combine;//总共发送数据包大小之和
+    int Data_send_combine;//总共发送数据大小之和
     int Sec_data;//每秒发送数据值
 
 
@@ -48,16 +51,14 @@ public:
     bool Set_data_combine(int i);//把i线程的相关数据赋值到总的线程池
     int Get_data_combine();//获取数据总和
 
-    int Get_Sec_data();//获取每秒数据
-
 };
 
 class Thread_Pool
 {
-private:
+public:
     MAp_thread Map_thread;
 
-
+private:
     int Thread_number = INIT_POOL_NUM;//线程个数
     int Live_time = KEEP_ALIVE_TIME;//线程生存时间,单位是秒
 public:
